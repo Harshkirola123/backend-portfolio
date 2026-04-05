@@ -1,8 +1,11 @@
 class ErrorResponse extends Error {
-  public statusCode: any;
-  constructor(message: any, statusCode: number) {
+  public statusCode: number;
+
+  constructor(message: string, statusCode: number) {
     super(message);
     this.statusCode = statusCode;
+
+    Error.captureStackTrace(this, this.constructor);
   }
 }
 
