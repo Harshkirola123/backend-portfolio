@@ -1,7 +1,5 @@
-declare namespace Express {
-  export interface Request {
-    user: {
-      id: string;
-    };
-  }
+import { Request } from "express";
+
+export interface AuthRequest extends Request {
+  user?: TokenPayload;
 }

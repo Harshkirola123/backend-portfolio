@@ -26,6 +26,23 @@ type TokenPayload = {
   email?: string;
 };
 
-interface AuthRequest extends Request {
-  user?: TokenPayload;
+interface IEducation {
+  school: string;
+  degree: string;
+  fieldOfStudy?: string;
+  startDate: Date;
+  endDate?: Date;
+  isCurrent?: boolean;
+  grade?: string;
+  description?: string;
+  location?: string;
+}
+
+interface PaginationQuery {
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  order?: "asc" | "desc";
+  all?: boolean | string;
+  search?: string;
 }

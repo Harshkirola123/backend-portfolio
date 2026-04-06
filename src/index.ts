@@ -6,6 +6,8 @@ import connectDB from "./config/db";
 import ErrorResponse from "./helper/errorResponse";
 import asyncHandler from "./helper/asyncHandler";
 import morgan from "morgan";
+import swaggerUi from "swagger-ui-express";
+import fs from "fs";
 
 const app = express();
 
@@ -13,6 +15,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+
+const swaggerFile = JSON.parse(
+  fs.readFileSync("./swagger-output.json", "utf-8"),
+);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.get(
   "/",

@@ -1,24 +1,24 @@
-import { Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import ErrorResponse from "../helper/errorResponse";
 import { verifyAccessToken } from "../util/token";
 
 export const authMiddleware = (
-  req: AuthRequest,
+  req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const authHeader = req.headers.get("authorization");
+    const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      throw new ErrorResponse("Unauthorized", 401);
+      return next(new ErrorResponse("Unauthorized", 401));
     }
 
     const token = authHeader.split(" ")[1];
 
     const decoded = verifyAccessToken(token);
 
-    req.user = decoded;
+    (req as any).user = decoded;
 
     next();
   } catch (error) {
