@@ -1,6 +1,7 @@
 import { Router } from "express";
 import userRoute from "./user/user.route";
 import educationRoute from "./education/education.route";
+import certificateRoute from "./certifications/certification.route";
 
 const router = Router();
 
@@ -17,5 +18,6 @@ const router = Router();
 router.use("/user", userRoute);
 
 router.use("/education", educationRoute);
+router.use("/certificate", certificateRoute);
 
 export default router;

@@ -45,4 +45,18 @@ interface PaginationQuery {
   order?: "asc" | "desc";
   all?: boolean | string;
   search?: string;
+  isActive?: boolean | string;
+}
+
+interface ICertification {
+  title: string;
+  organization: string;
+  issueDate: Date;
+  expirationDate?: Date;
+  credentialId?: string;
+  credentialURL?: string;
+  skills?: string[];
+  description?: string;
+  certificateImage?: string;
+  isActive?: boolean;
 }
