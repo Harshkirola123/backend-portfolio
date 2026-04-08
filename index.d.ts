@@ -45,4 +45,36 @@ interface PaginationQuery {
   order?: "asc" | "desc";
   all?: boolean | string;
   search?: string;
+  isActive?: boolean | string;
+}
+
+interface ICertification {
+  title: string;
+  organization: string;
+  issueDate: Date;
+  expirationDate?: Date;
+  credentialId?: string;
+  credentialURL?: string;
+  skills?: string[];
+  description?: string;
+  certificateImage?: string;
+  isActive?: boolean;
+}
+interface IExperience {
+  companyName: string;
+  role: string;
+  employmentType:
+    | "fullTime"
+    | "partTime"
+    | "internship"
+    | "contract"
+    | "freelance";
+
+  location?: string;
+  startDate: Date;
+  endDate?: Date;
+  isCurrent: boolean;
+  description?: string;
+  responsibilities?: string[];
+  technologies?: string[];
 }
