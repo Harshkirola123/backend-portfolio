@@ -60,3 +60,21 @@ interface ICertification {
   certificateImage?: string;
   isActive?: boolean;
 }
+interface IExperience {
+  companyName: string;
+  role: string;
+  employmentType:
+    | "fullTime"
+    | "partTime"
+    | "internship"
+    | "contract"
+    | "freelance";
+
+  location?: string;
+  startDate: Date;
+  endDate?: Date;
+  isCurrent: boolean;
+  description?: string;
+  responsibilities?: string[];
+  technologies?: string[];
+}
