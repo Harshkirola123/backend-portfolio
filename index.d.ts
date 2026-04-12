@@ -78,3 +78,36 @@ interface IExperience {
   responsibilities?: string[];
   technologies?: string[];
 }
+
+interface IProject {
+  title: string;
+  description: string;
+  techStack: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+  images?: string[];
+  status?: "completed" | "in-progress";
+}
+
+interface IProfile {
+  name: string;
+  title: string;
+  bio?: string;
+
+  skills: string[];
+
+  location?: string;
+
+  socialLinks?: {
+    github?: string;
+    linkedin?: string;
+    twitter?: string;
+    website?: string;
+  };
+
+  profileImage?: string;
+  resumeUrl?: string;
+
+  createdAt?: Date;
+  updatedAt?: Date;
+}
