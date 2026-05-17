@@ -6,6 +6,7 @@ import connectDB from "./config/db";
 import ErrorResponse from "./helper/errorResponse";
 import asyncHandler from "./helper/asyncHandler";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
 import fs from "fs";
 
@@ -13,6 +14,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 

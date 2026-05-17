@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import * as userService from "./user.service";
 import asyncHandler from "../helper/asyncHandler";
+import { setRefreshTokenCookie } from "../util/setCookies";
 
 export const createUser = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -15,11 +16,28 @@ export const createUser = asyncHandler(
 
 export const login = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const user = await userService.loginService(req.body);
+    const result = await userService.loginService(req.body);
+
+    setRefreshTokenCookie(res, result.refreshToken);
 
     res.status(201).json({
       success: true,
-      data: user,
+      data: { user: result.user, accessToken: result.accessToken },
+    });
+  },
+);
+
+export const refreshToken = asyncHandler(
+  async (req: Request, res: Response) => {
+    const refreshToken = req.cookies.refreshToken;
+    const result = await userService.refreshTokenService(refreshToken);
+
+    setRefreshTokenCookie(res, result.newRefreshToken);
+
+    res.status(200).json({
+      success: true,
+      message: "Access token refreshed successfully",
+      data: { access: result.accessToken },
     });
   },
 );
