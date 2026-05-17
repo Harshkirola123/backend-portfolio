@@ -1,7 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import * as userService from "./user.service";
 import asyncHandler from "../helper/asyncHandler";
-import { setRefreshTokenCookie } from "../util/setCookies";
+import {
+  removeRefreshTokenCookie,
+  setRefreshTokenCookie,
+} from "../util/setCookies";
 
 export const createUser = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -37,7 +40,17 @@ export const refreshToken = asyncHandler(
     res.status(200).json({
       success: true,
       message: "Access token refreshed successfully",
-      data: { access: result.accessToken },
+      data: { accessToken: result.accessToken },
     });
   },
 );
+
+export const logout = asyncHandler(async (req: Request, res: Response) => {
+  removeRefreshTokenCookie(res);
+
+  res.status(200).json({
+    success: true,
+    message: "Logout Successfull",
+    data: {},
+  });
+});
