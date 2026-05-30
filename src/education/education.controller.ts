@@ -5,7 +5,7 @@ import { AuthRequest } from "../@types/express";
 
 export const addEducation = asyncHandler(
   async (req: AuthRequest, res: Response, next: NextFunction) => {
-    const user = req.user;
+    // const user = req.user;
     const result = await educationService.addEducationService(req.body);
 
     res.status(201).json({

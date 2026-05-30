@@ -1,10 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import * as userService from "./user.service";
 import asyncHandler from "../helper/asyncHandler";
+import User from "./user.model";
 import {
+  removeAccessTokenCookie,
   removeRefreshTokenCookie,
+  setAccessTokenCookie,
   setRefreshTokenCookie,
 } from "../util/setCookies";
+import { AuthRequest } from "../@types/express";
 
 export const createUser = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -22,10 +26,11 @@ export const login = asyncHandler(
     const result = await userService.loginService(req.body);
 
     setRefreshTokenCookie(res, result.refreshToken);
+    setAccessTokenCookie(res, result.accessToken);
 
     res.status(201).json({
       success: true,
-      data: { user: result.user, accessToken: result.accessToken },
+      data: { user: result.user },
     });
   },
 );
@@ -36,17 +41,19 @@ export const refreshToken = asyncHandler(
     const result = await userService.refreshTokenService(refreshToken);
 
     setRefreshTokenCookie(res, result.newRefreshToken);
+    setAccessTokenCookie(res, result.accessToken);
 
     res.status(200).json({
       success: true,
       message: "Access token refreshed successfully",
-      data: { accessToken: result.accessToken },
+      data: {},
     });
   },
 );
 
 export const logout = asyncHandler(async (req: Request, res: Response) => {
   removeRefreshTokenCookie(res);
+  removeAccessTokenCookie(res);
 
   res.status(200).json({
     success: true,
@@ -54,3 +61,16 @@ export const logout = asyncHandler(async (req: Request, res: Response) => {
     data: {},
   });
 });
+
+export const getUserDetail = asyncHandler(
+  async (req: AuthRequest, res: Response) => {
+    const user = req.user;
+    const data = await userService.getUserDetail(user?.id || "");
+
+    res.status(200).json({
+      success: true,
+      message: "Logout Successfull",
+      data: data,
+    });
+  },
+);

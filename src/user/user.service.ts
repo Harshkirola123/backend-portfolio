@@ -88,3 +88,17 @@ export const refreshTokenService = async (
     accessToken,
   };
 };
+
+export const getUserDetail = async (userId: string): Promise<UserResponse> => {
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new ErrorResponse("User not found", 404);
+  }
+
+  return {
+    id: user._id.toString(),
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  };
+};

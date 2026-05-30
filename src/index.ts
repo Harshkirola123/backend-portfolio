@@ -22,7 +22,7 @@ const swaggerFile = JSON.parse(
   fs.readFileSync("./swagger-output.json", "utf-8"),
 );
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app.use("/#docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.get(
   "/",
